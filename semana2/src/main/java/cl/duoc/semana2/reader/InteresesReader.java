@@ -1,0 +1,33 @@
+package cl.duoc.semana2.reader;
+
+import cl.duoc.semana2.dto.InteresCsv;
+
+import org.springframework.batch.infrastructure.item.file.FlatFileItemReader;
+import org.springframework.batch.infrastructure.item.file.builder.FlatFileItemReaderBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
+
+@Configuration
+public class InteresesReader {
+
+    @Bean
+    public FlatFileItemReader<InteresCsv> interesesItemReader() {
+
+        return new FlatFileItemReaderBuilder<InteresCsv>()
+                .name("interesesItemReader")
+                .resource(new ClassPathResource("data/intereses.csv"))
+                .linesToSkip(1)
+                .delimited()
+                .delimiter(",")
+                .names(
+                        "cuentaId",
+                        "nombre",
+                        "saldo",
+                        "edad",
+                        "tipo"
+                )
+                .targetType(InteresCsv.class)
+                .build();
+    }
+}
